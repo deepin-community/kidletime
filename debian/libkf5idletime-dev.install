@@ -1,0 +1,5 @@
+/usr/include/KF5/kidletime_version.h
+usr/include/KF5/KIdleTime
+usr/lib/*/cmake/KF5IdleTime/
+usr/lib/*/libKF5IdleTime.so
+usr/lib/*/qt5/mkspecs/modules/qt_KIdleTime.pri

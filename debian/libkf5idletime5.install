@@ -1,0 +1,5 @@
+usr/lib/*/libKF5IdleTime.so.5
+usr/lib/*/libKF5IdleTime.so.5.*
+usr/lib/*/qt5/plugins/kf5/org.kde.kidletime.platforms/KF5IdleTimeXcbPlugin*.so
+usr/share/qlogging-categories5/kidletime.categories
+usr/share/qlogging-categories5/kidletime.renamecategories

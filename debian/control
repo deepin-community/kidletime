@@ -1,0 +1,64 @@
+Source: kidletime
+Priority: optional
+Section: libs
+Maintainer: Debian Qt/KDE Maintainers <debian-qt-kde@lists.debian.org>
+Uploaders: Aurélien COUDERC <coucouf@debian.org>,
+           Norbert Preining <norbert@preining.info>,
+Build-Depends: cmake (>= 3.16~),
+               debhelper-compat (= 13),
+               doxygen,
+               extra-cmake-modules (>= 5.90.0~),
+               libqt5sql5-sqlite,
+               libqt5x11extras5-dev (>= 5.15.2~),
+               libx11-dev,
+               libx11-xcb-dev,
+               libxcb-sync-dev,
+               libxcb1-dev,
+               libxss-dev [!hurd-any],
+               pkg-config,
+               pkg-kde-tools (>= 0.15.15ubuntu1~),
+               qtbase5-dev (>= 5.15.2~),
+               qttools5-dev,
+               qttools5-dev-tools (>= 5.4),
+Standards-Version: 4.6.0
+Homepage: https://invent.kde.org/frameworks/kidletime
+Vcs-Browser: https://salsa.debian.org/qt-kde-team/kde/kidletime
+Vcs-Git: https://salsa.debian.org/qt-kde-team/kde/kidletime.git
+Rules-Requires-Root: no
+
+Package: libkf5idletime-dev
+Section: libdevel
+Architecture: any
+Depends: libkf5idletime5 (= ${binary:Version}),
+         qtbase5-dev (>= 5.15.2~),
+         ${misc:Depends},
+Recommends: libkf5idletime-doc (= ${source:Version})
+Description: development headers for the kidletime library
+ This package contains development files for building software that uses
+ libraries from the kidletime KDE framework.
+Breaks: libkf5kdelibs4support-dev (<< 5.54)
+
+Package: libkf5idletime-doc
+Architecture: all
+Multi-Arch: foreign
+Depends: ${misc:Depends}
+Description: library to provide information about idle time (documentation)
+ This library contains a class that allows applications to watch for
+ user activity or inactivity. It is useful not only for finding out about
+ the current idle time of the PC, but also for getting notified upon idle
+ time events, such as custom timeouts, or user activity.
+ .
+ This package contains the qch documentation files.
+Section: doc
+
+Package: libkf5idletime5
+Architecture: any
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Multi-Arch: same
+Recommends: kwayland-integration
+Description: library to provide information about idle time
+ This library contains a class that allows applications to watch for
+ user activity or inactivity. It is useful not only for finding out about
+ the current idle time of the PC, but also for getting notified upon idle
+ time events, such as custom timeouts, or user activity.
+Breaks: baloo-kf5 (<< 5.54)
