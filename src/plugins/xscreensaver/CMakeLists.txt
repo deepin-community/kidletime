@@ -18,7 +18,7 @@ target_link_libraries(KF5IdleTimeXcbPlugin1
 if (TARGET Qt5::X11Extras)
     target_link_libraries(KF5IdleTimeXcbPlugin1 Qt5::X11Extras)
 elseif (TARGET Qt6::Gui)
-    target_link_libraries(KF5IdleTimeXcbPlugin1 Qt6::GuiPrivate) # qtx11extras_p.h
+    target_link_libraries(KF5IdleTimeXcbPlugin1 Qt6::Gui)
 endif()
 
 
@@ -26,5 +26,5 @@ install(
     TARGETS
         KF5IdleTimeXcbPlugin1
     DESTINATION
-        ${KDE_INSTALL_PLUGINDIR}/kf5/org.kde.kidletime.platforms/
+        ${KDE_INSTALL_PLUGINDIR}/kf${QT_MAJOR_VERSION}/org.kde.kidletime.platforms/
 )
