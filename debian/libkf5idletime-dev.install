@@ -1,4 +1,3 @@
-/usr/include/KF5/kidletime_version.h
 usr/include/KF5/KIdleTime
 usr/lib/*/cmake/KF5IdleTime/
 usr/lib/*/libKF5IdleTime.so

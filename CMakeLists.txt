@@ -1,35 +1,34 @@
 cmake_minimum_required(VERSION 3.16)
 
-set(KF_VERSION "5.90.0") # handled by release scripts
+set(KF_VERSION "5.103.0") # handled by release scripts
 project(KIdleTime VERSION ${KF_VERSION})
 
 # ECM setup
 include(FeatureSummary)
-find_package(ECM 5.90.0  NO_MODULE)
+find_package(ECM 5.103.0  NO_MODULE)
 set_package_properties(ECM PROPERTIES TYPE REQUIRED DESCRIPTION "Extra CMake Modules." URL "https://commits.kde.org/extra-cmake-modules")
 feature_summary(WHAT REQUIRED_PACKAGES_NOT_FOUND FATAL_ON_MISSING_REQUIRED_PACKAGES)
 
 set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH})
 
+include(KDEInstallDirs)
+include(KDECMakeSettings)
+include(KDEFrameworkCompilerSettings NO_POLICY_SCOPE)
 
+include(KDEGitCommitHooks)
 include(CMakeFindFrameworks)
 include(CMakePackageConfigHelpers)
 include(ECMGenerateExportHeader)
 include(ECMQtDeclareLoggingCategory)
 include(ECMSetupVersion)
 include(ECMGenerateHeaders)
+include(ECMDeprecationSettings)
 include(ECMAddQch)
 
 ecm_setup_version(PROJECT VARIABLE_PREFIX KIDLETIME
                         VERSION_HEADER "${CMAKE_CURRENT_BINARY_DIR}/kidletime_version.h"
                         PACKAGE_VERSION_FILE "${CMAKE_CURRENT_BINARY_DIR}/KF5IdleTimeConfigVersion.cmake"
                         SOVERSION 5)
-
-# Dependencies
-include(KDEInstallDirs)
-include(KDEFrameworkCompilerSettings NO_POLICY_SCOPE)
-include(KDECMakeSettings)
-include(KDEGitCommitHooks)
 
 set(REQUIRED_QT_VERSION 5.15.2)
 find_package(Qt${QT_MAJOR_VERSION} ${REQUIRED_QT_VERSION} CONFIG REQUIRED Gui)
@@ -41,13 +40,12 @@ endif()
 if(NOT APPLE)
     find_package(X11)
     find_package(XCB COMPONENTS XCB)
+    find_package(Qt${QT_MAJOR_VERSION}WaylandClient ${REQUIRED_QT_VERSION} CONFIG)
 endif()
 
 if(X11_FOUND)
     if (QT_MAJOR_VERSION STREQUAL "5")
         find_package(Qt5 ${REQUIRED_QT_VERSION} CONFIG REQUIRED X11Extras)
-    else()
-        # qtx11extras_p.h is in Qt6Gui, which implied by the Qt6Gui above
     endif()
     find_package(XCB COMPONENTS XCB SYNC)
     find_package(X11_XCB)
@@ -79,12 +77,28 @@ else()
     set(HAVE_X11 FALSE)
 endif()
 
+if(Qt5WaylandClient_FOUND)
+    find_package(QtWaylandScanner REQUIRED)
+    find_package(Wayland 1.9 REQUIRED Client)
+    find_package(PlasmaWaylandProtocols 1.6.0 CONFIG REQUIRED)
+    find_package(WaylandProtocols 1.27)
+    set_package_properties(WaylandProtocols PROPERTIES
+        TYPE REQUIRED
+        PURPOSE "Collection of Wayland protocols that add functionality not available in the Wayland core protocol"
+        URL "https://gitlab.freedesktop.org/wayland/wayland-protocols/"
+    )
+endif()
+
 set(EXCLUDE_DEPRECATED_BEFORE_AND_AT 0 CACHE STRING "Control the range of deprecated API excluded from the build [default=0].")
 
 option(BUILD_QCH "Build API documentation in QCH format (for e.g. Qt Assistant, Qt Creator & KDevelop)" OFF)
 add_feature_info(QCH ${BUILD_QCH} "API documentation in QCH format (for e.g. Qt Assistant, Qt Creator & KDevelop)")
-add_definitions(-DQT_DISABLE_DEPRECATED_BEFORE=0x050f02)
-add_definitions(-DKF_DISABLE_DEPRECATED_BEFORE_AND_AT=0x055900)
+
+ecm_set_disabled_deprecation_versions(
+    QT 5.15.2
+    KF 5.97
+)
+
 # Subdirectories
 add_subdirectory(src)
 add_subdirectory(examples)
@@ -115,7 +129,7 @@ install(FILES  "${CMAKE_CURRENT_BINARY_DIR}/KF5IdleTimeConfig.cmake"
 install(EXPORT KF5IdleTimeTargets DESTINATION "${CMAKECONFIG_INSTALL_DIR}" FILE KF5IdleTimeTargets.cmake NAMESPACE KF5:: )
 
 install(FILES ${CMAKE_CURRENT_BINARY_DIR}/kidletime_version.h
-        DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF} COMPONENT Devel)
+        DESTINATION ${KDE_INSTALL_INCLUDEDIR_KF}/KIdleTime COMPONENT Devel)
 
 feature_summary(WHAT ALL   FATAL_ON_MISSING_REQUIRED_PACKAGES)
 

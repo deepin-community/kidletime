@@ -56,6 +56,7 @@ libKF5IdleTime.so.5 libkf5idletime5 #MINVER#
  _ZNK9KIdleTime10metaObjectEv@Base 4.96.0
  _ZNK9KIdleTime12idleTimeoutsEv@Base 4.96.0
  _ZNK9KIdleTime8idleTimeEv@Base 4.96.0
+ _ZNSt6vectorIiSaIiEE17_M_realloc_insertIJRKiEEEvN9__gnu_cxx17__normal_iteratorIPiS1_EEDpOT_@Base 5.92.0
  _ZTI17WidgetBasedPoller@Base 5.13.0
  _ZTI20AbstractSystemPoller@Base 5.13.0
  _ZTI9KIdleTime@Base 4.96.0

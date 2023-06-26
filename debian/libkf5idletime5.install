@@ -1,5 +1,7 @@
+#!/usr/bin/dh-exec
 usr/lib/*/libKF5IdleTime.so.5
 usr/lib/*/libKF5IdleTime.so.5.*
 usr/lib/*/qt5/plugins/kf5/org.kde.kidletime.platforms/KF5IdleTimeXcbPlugin*.so
+[linux-any] usr/lib/*/qt5/plugins/kf5/org.kde.kidletime.platforms/KF5IdleTimeWaylandPlugin*.so
 usr/share/qlogging-categories5/kidletime.categories
 usr/share/qlogging-categories5/kidletime.renamecategories
